@@ -1,38 +1,29 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Technician Login — FutriFix</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="centered-page">
-  <div class="card login-card">
-    <div class="logo">FF</div>
+<body>
+  <div class="container">
     <h2>Technician Login</h2>
-    <form id="techLogin" class="form">
-      <label>Email
-        <input type="email" id="techEmail" required />
-      </label>
-      <label>Password
-        <input type="password" id="techPassword" required minlength="6" />
-      </label>
-      <button class="btn" type="submit">Login</button>
-      <div class="muted small alt">No account? <a href="/signup-tech.html">Sign up</a></div>
-    </form>
+    <div class="card" style="max-width:480px;">
+      <form id="loginFormTech">
+        <div class="form-row">
+          <input name="email" placeholder="Email" class="input" />
+        </div>
+        <div class="form-row">
+          <input name="password" type="password" placeholder="Password" class="input" />
+        </div>
+        <div style="margin-top:10px;">
+          <button type="button" class="btn" onclick="futrifix.login('loginFormTech')">Login</button>
+        </div>
+      </form>
+    </div>
+    <p class="muted">No account? <a href="/signup-tech.html">Register as technician</a></p>
   </div>
-
-  <script>
-    document.getElementById('techLogin').addEventListener('submit', async function(e){
-      e.preventDefault();
-      const payload = { role: "technician", email: document.getElementById('techEmail').value.trim(), password: document.getElementById('techPassword').value };
-      const res = await fetch('/login', { method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
-      const data = await res.json();
-      if(!res.ok){ alert(data.message || 'Login failed'); return; }
-      localStorage.setItem('futrifix_user', JSON.stringify(data.user));
-      alert('Welcome, ' + data.user.name);
-      window.location = '/';
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
