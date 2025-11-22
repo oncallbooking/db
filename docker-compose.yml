@@ -5,10 +5,19 @@ services:
     build: ./frontend
     ports:
       - "80:80"
-    restart: always
+    restart: unless-stopped
+    depends_on:
+      - backend
 
   backend:
     build: ./backend
     ports:
       - "5000:5000"
-    restart: always
+    restart: unless-stopped
+    volumes:
+      - db-data:/app/db.json
+
+volumes:
+  db-data:
+    # local volume for db.json (persist data between restarts)
+    driver: local
