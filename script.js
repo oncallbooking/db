@@ -1,145 +1,58 @@
-// script.js - booking logic (localStorage)
-(() => {
-  const FORM_ID = "bookingForm";
-  const LIST_ID = "bookingsList";
-  const EMPTY_ID = "emptyState";
-  const STORAGE_KEY = "oncallbookings.v1";
+/* script.js - demo interactions (static site) */
+document.addEventListener('DOMContentLoaded', function(){
 
-  const form = document.getElementById(FORM_ID);
-  const list = document.getElementById(LIST_ID);
-  const empty = document.getElementById(EMPTY_ID);
-  const clearBtn = document.getElementById("clearBtn");
-
-  function readStorage() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : [];
-    } catch (e) {
-      console.error("Failed to read storage", e);
-      return [];
-    }
-  }
-
-  function writeStorage(items) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  }
-
-  function uid() {
-    return "b_" + Math.random().toString(36).slice(2, 9);
-  }
-
-  function render() {
-    const items = readStorage();
-    list.innerHTML = "";
-    if (!items.length) {
-      empty.style.display = "block";
-      return;
-    }
-    empty.style.display = "none";
-
-    items.slice().reverse().forEach(item => {
-      const li = document.createElement("li");
-      li.className = "booking";
-      li.dataset.id = item.id;
-
-      const meta = document.createElement("div");
-      meta.className = "meta";
-      const name = document.createElement("div");
-      name.innerHTML = `<strong>${escapeHtml(item.name)}</strong> <span class="small">• ${formatDateTime(item.date, item.time)}</span>`;
-      const phone = document.createElement("div");
-      phone.className = "small";
-      phone.textContent = item.phone || "";
-      const notes = document.createElement("div");
-      notes.className = "small";
-      notes.textContent = item.notes || "";
-
-      meta.appendChild(name);
-      if (item.phone) meta.appendChild(phone);
-      if (item.notes) meta.appendChild(notes);
-
-      const controls = document.createElement("div");
-      controls.style.display = "flex";
-      controls.style.flexDirection = "column";
-      controls.style.gap = "8px";
-      const badge = document.createElement("div");
-      badge.className = "badge";
-      badge.textContent = item.time || "—";
-      const del = document.createElement("button");
-      del.textContent = "Delete";
-      del.style.padding = "6px 8px";
-      del.style.borderRadius = "8px";
-      del.style.background = "transparent";
-      del.style.color = "var(--muted)";
-      del.style.border = "1px solid rgba(255,255,255,0.04)";
-      del.style.cursor = "pointer";
-      del.onclick = () => removeBooking(item.id);
-
-      controls.appendChild(badge);
-      controls.appendChild(del);
-
-      li.appendChild(meta);
-      li.appendChild(controls);
-      list.appendChild(li);
+  // FIND button on home page
+  var findBtn = document.getElementById('findBtn');
+  if(findBtn){
+    findBtn.addEventListener('click', function(){
+      var loc = document.getElementById('location').value.trim();
+      var svc = document.getElementById('service').value;
+      if(!loc || !svc){ alert('Please enter location and select a service.'); return; }
+      // In a real site you would call the backend here — demo shows a simulated result.
+      alert('Searching technicians for ' + svc + ' near ' + loc + '\\n(This is a static demo — implement backend to connect to real data.)');
     });
   }
 
-  function formatDateTime(date, time) {
-    if (!date) return time || "";
-    try {
-      const d = new Date(date + "T" + (time || "00:00"));
-      return d.toLocaleString();
-    } catch {
-      return `${date} ${time || ""}`;
-    }
-  }
-
-  function removeBooking(id) {
-    const items = readStorage().filter(i => i.id !== id);
-    writeStorage(items);
-    render();
-  }
-
-  function clearAll() {
-    if (!confirm("Clear all bookings? This cannot be undone.")) return;
-    localStorage.removeItem(STORAGE_KEY);
-    render();
-  }
-
-  function escapeHtml(s) {
-    return String(s || "").replace(/[&<>"']/g, (m) => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-    }[m]));
-  }
-
-  form.addEventListener("submit", (ev) => {
-    ev.preventDefault();
-    const fd = new FormData(form);
-    const name = (fd.get("name") || "").toString().trim();
-    const date = (fd.get("date") || "").toString();
-    const time = (fd.get("time") || "").toString();
-    const phone = (fd.get("phone") || "").toString().trim();
-    const notes = (fd.get("notes") || "").toString().trim();
-
-    if (name.length < 2) { alert("Please enter a valid name."); return; }
-    if (!date) { alert("Please choose a date."); return; }
-    if (!time) { alert("Please choose a time."); return; }
-
-    const items = readStorage();
-    const booking = {
-      id: uid(),
-      name, date, time, phone, notes,
-      createdAt: new Date().toISOString()
-    };
-    items.push(booking);
-    writeStorage(items);
-    form.reset();
-    render();
-    // focus name for quick next add
-    document.getElementById("name").focus();
+  // generic subscribe button logic (non-auth)
+  document.querySelectorAll('.subscribe').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var plan = btn.getAttribute('data-plan');
+      if(confirm('Subscribe to ' + plan.toUpperCase() + ' — demo?')){
+        btn.textContent = 'Subscribed';
+        btn.disabled = true;
+        btn.classList.add('disabled');
+        // persist plan locally
+        localStorage.setItem('futrifix_plan', plan);
+        var resEl = document.getElementById('subResult');
+        if(resEl) resEl.textContent = 'Subscribed to ' + plan.toUpperCase() + ' — Thank you (demo).';
+      }
+    });
   });
 
-  clearBtn.addEventListener("click", clearAll);
+  // show user status in console (for development)
+  var role = localStorage.getItem('futrifix_role');
+  var user = localStorage.getItem('futrifix_user');
+  if(role && user){
+    console.info('Demo session:', role, user);
+  }
 
-  // initial render
-  render();
-})();
+  // Add a small convenience: if Post Job clicked and not logged in, prompt
+  document.querySelectorAll('.btn-post').forEach(function(b){
+    b.addEventListener('click', function(){
+      var role = localStorage.getItem('futrifix_role');
+      if(!role){
+        if(confirm('You must be logged in to post a job. Go to Customer Login?')){
+          window.location = 'login-customer.html';
+        }
+        return;
+      }
+      if(role !== 'customer'){
+        alert('Only customers can post jobs. Please login as a customer.');
+        window.location = 'login-customer.html';
+        return;
+      }
+      alert('Open "Post job" flow (demo). In a real app you would implement a job posting form and send data to the server.');
+    });
+  });
+
+});
