@@ -1,44 +1,31 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Customer Signup — FutriFix</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <title>Sign up — Customer</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="centered-page">
-  <div class="card login-card">
-    <div class="logo">FF</div>
-    <h2>Customer Signup</h2>
-    <form id="custSignup" class="form">
-      <label>Full name
-        <input id="custName" required />
-      </label>
-      <label>Email
-        <input type="email" id="custEmail" required />
-      </label>
-      <label>Password
-        <input type="password" id="custPassword" minlength="6" required />
-      </label>
-      <button class="btn" type="submit">Create account</button>
-    </form>
-    <div class="muted small alt"><a href="/login-customer.html">Already have an account?</a></div>
+<body>
+  <div class="container">
+    <h2>Customer Registration</h2>
+    <div class="card" style="max-width:520px;">
+      <form id="regCustomer">
+        <div class="form-row">
+          <input name="name" placeholder="Full name" class="input" />
+        </div>
+        <div class="form-row">
+          <input name="email" placeholder="Email" class="input" />
+        </div>
+        <div class="form-row">
+          <input name="password" type="password" placeholder="Password" class="input" />
+        </div>
+        <div style="margin-top:10px;">
+          <button type="button" class="btn" onclick="futrifix.registerCustomer('regCustomer')">Register</button>
+        </div>
+      </form>
+    </div>
   </div>
-
-  <script>
-    document.getElementById('custSignup').addEventListener('submit', async function(e){
-      e.preventDefault();
-      const payload = {
-        role: "customer",
-        name: document.getElementById('custName').value.trim(),
-        email: document.getElementById('custEmail').value.trim(),
-        password: document.getElementById('custPassword').value
-      };
-      const res = await fetch('/signup', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
-      const data = await res.json();
-      alert(data.message || 'Signup complete');
-      if(res.ok) window.location = '/login-customer.html';
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
