@@ -4,65 +4,82 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>OnCallBooking — Static Demo</title>
+  <title>FutriFix — Certified technicians</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="app">
-    <header class="header">
-      <h1>OnCallBooking</h1>
-      <p class="tagline">Quick static demo — bookings saved locally</p>
-    </header>
+  <header class="topbar">
+    <div class="container top-inner">
+      <div class="brand">FutriFix</div>
+      <nav class="navlinks">
+        <a href="index.html">Home</a>
+        <a href="subscription.html">Subscriptions</a>
+        <a href="login-customer.html">Customer Login</a>
+        <a href="login-tech.html">Technician Login</a>
+      </nav>
+      <button class="btn btn-post">Post Job</button>
+    </div>
+  </header>
 
-    <main class="main">
-      <section class="card form-card" aria-labelledby="form-heading">
-        <h2 id="form-heading">New Booking</h2>
-        <form id="bookingForm" autocomplete="off">
-          <div class="row">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" required minlength="2" placeholder="Your full name" />
-          </div>
+  <main class="container hero">
+    <section class="left">
+      <h1>Certified technicians across India — book in minutes.</h1>
+      <p class="muted">EV, Solar, AC, Refrigerator, Washing machines — local pros with verified profiles and transparent pricing.</p>
 
-          <div class="row split">
-            <div>
-              <label for="date">Date</label>
-              <input id="date" name="date" type="date" required />
-            </div>
-            <div>
-              <label for="time">Time</label>
-              <input id="time" name="time" type="time" required />
-            </div>
-          </div>
+      <div class="search">
+        <input id="location" placeholder="Enter PIN code or city" />
+        <select id="service">
+          <option value="">Select Service</option>
+          <option>EV Scooter Repair</option>
+          <option>Solar Panel Service</option>
+          <option>AC Service</option>
+          <option>Refrigerator Repair</option>
+          <option>Washing Machine</option>
+        </select>
+        <button id="findBtn" class="btn">Find</button>
+      </div>
 
-          <div class="row">
-            <label for="phone">Phone</label>
-            <input id="phone" name="phone" type="tel" placeholder="+91-..." />
-          </div>
+      <div class="stats">
+        <div class="stat-item"><strong>120+</strong><span>Towns</span></div>
+        <div class="stat-item"><strong>8k+</strong><span>Jobs Done</span></div>
+        <div class="stat-item"><strong>4.9</strong><span>Avg Rating</span></div>
+      </div>
 
-          <div class="row">
-            <label for="notes">Notes</label>
-            <textarea id="notes" name="notes" rows="3" placeholder="Optional notes"></textarea>
-          </div>
+      <p class="muted small">Preview screenshots (loaded from local asset paths).</p>
+      <div class="thumbs">
+        <img src="/mnt/data/Screenshot 2025-11-22 at 11.26.48 AM.png" alt="screenshot 1" />
+        <img src="/mnt/data/Screenshot 2025-11-22 at 11.28.41 AM.png" alt="screenshot 2" />
+        <img src="/mnt/data/Screenshot 2025-11-22 at 11.29.24 AM.png" alt="screenshot 3" />
+      </div>
+    </section>
 
-          <div class="actions">
-            <button type="submit" id="saveBtn">Save Booking</button>
-            <button type="button" id="clearBtn" class="muted">Clear All</button>
-          </div>
-        </form>
-      </section>
+    <aside class="right">
+      <div class="promo card">
+        <div class="promo-inner">
+          <div class="icon">⚡</div>
+          <h3>Trusted Service Excellence</h3>
+          <p class="muted">Verified technicians, secure payments, and quick support.</p>
+          <a class="btn" href="subscription.html">View Plans</a>
+        </div>
+      </div>
+    </aside>
+  </main>
 
-      <section class="card list-card" aria-labelledby="list-heading">
-        <h2 id="list-heading">Bookings</h2>
-        <div id="emptyState" class="empty">No bookings yet — add one using the form.</div>
-        <ul id="bookingsList" class="bookings"></ul>
-      </section>
-    </main>
+  <section class="popular container">
+    <h2>Popular Services</h2>
+    <div class="service-grid">
+      <div class="svc card">⚡<div class="svc-title">EV Scooter Repair</div><div class="muted small">Fast pickup & repair</div></div>
+      <div class="svc card">☀️<div class="svc-title">Solar Panel Service</div><div class="muted small">Cleaning & inverter checks</div></div>
+      <div class="svc card">🌀<div class="svc-title">AC Service</div><div class="muted small">Gas top-up & cleaning</div></div>
+      <div class="svc card">🧊<div class="svc-title">Refrigerator Repair</div><div class="muted small">Compressor & gas works</div></div>
+      <div class="svc card">🧺<div class="svc-title">Washing Machine</div><div class="muted small">All brands serviced</div></div>
+    </div>
+  </section>
 
-    <footer class="footer">
-      <small>Static demo • Data stored in your browser (localStorage)</small>
-    </footer>
-  </div>
+  <footer class="container footer">
+    <div>© FutriFix Demo — static site</div>
+  </footer>
 
-  <script src="script.js" defer></script>
+  <script src="script.js"></script>
 </body>
 </html>
