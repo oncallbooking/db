@@ -1,0 +1,45 @@
+<!-- login-customer.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Customer Login — FutriFix</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="centered-page">
+  <div class="card login-card">
+    <div class="logo">FF</div>
+    <h2>Customer Login</h2>
+    <form id="custLogin" class="form">
+      <label>Email
+        <input type="email" id="custEmail" placeholder="you@example.com" required />
+      </label>
+      <label>Password
+        <input type="password" id="custPassword" required minlength="6" />
+      </label>
+
+      <div class="radio-row">
+        <label><input type="radio" name="role" checked disabled/> Customer</label>
+      </div>
+
+      <button class="btn" type="submit">Login</button>
+      <div class="muted small alt">Don't have an account? <a href="index.html">Back to Home</a></div>
+    </form>
+  </div>
+
+  <script>
+    // Customer login (demo)
+    document.getElementById('custLogin').addEventListener('submit', function(e){
+      e.preventDefault();
+      const email = document.getElementById('custEmail').value.trim();
+      if(!email){ alert('Provide an email'); return; }
+      // Simulate persisting "session" in localStorage
+      localStorage.setItem('futrifix_role','customer');
+      localStorage.setItem('futrifix_user', email);
+      alert('Logged in as customer: ' + email + ' (demo)'); 
+      window.location = 'index.html';
+    });
+  </script>
+</body>
+</html>
