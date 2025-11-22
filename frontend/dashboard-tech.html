@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Technician Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="top-inner">
+        <div class="brand">FutriFix</div>
+        <div>
+          <a id="logoutBtn" class="muted" href="#">Logout</a>
+        </div>
+      </div>
+    </div>
+
+    <main style="margin-top:24px;">
+      <h2>Open Jobs (place bids)</h2>
+      <div id="jobsListTech"></div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = JSON.parse(localStorage.getItem('futrifix_user') || 'null');
+      if (!user || user.role === 'customer') {
+        window.location.href = '/login-tech.html';
+        return;
+      }
+      document.getElementById('logoutBtn').addEventListener('click', ()=> {
+        localStorage.removeItem('futrifix_user');
+        window.location.href = '/';
+      });
+
+      futrifix.listJobs((jobs) => {
+        const out = document.getElementById('jobsListTech');
+        if (!jobs.length) out.innerHTML = '<div class="muted">No jobs yet</div>';
+        else {
+          out.innerHTML = jobs.map(j => {
+            const bidsHtml = (j.bids || []).map(b => `<div class="small muted">Bid: ${b.price} by ${b.techEmail}</div>`).join('');
+            return `<div class="card" style="margin-bottom:10px;">
+              <h3>${j.title} <span class="small muted">(${j.status || 'open'})</span></h3>
+              <div class="muted">${j.description || ''}</div>
+              ${bidsHtml}
+              <div style="margin-top:8px;">
+                <input placeholder="Your price" id="price-${j.id}" class="input" />
+                <input placeholder="Message (optional)" id="msg-${j.id}" class="input" />
+                <button class="btn" onclick="futrifix.placeBid('${j.id}', document.getElementById('price-${j.id}').value, document.getElementById('msg-${j.id}').value)">Place Bid</button>
+              </div>
+            </div>`;
+          }).join('');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
