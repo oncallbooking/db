@@ -1,0 +1,68 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OnCallBooking — Static Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>OnCallBooking</h1>
+      <p class="tagline">Quick static demo — bookings saved locally</p>
+    </header>
+
+    <main class="main">
+      <section class="card form-card" aria-labelledby="form-heading">
+        <h2 id="form-heading">New Booking</h2>
+        <form id="bookingForm" autocomplete="off">
+          <div class="row">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required minlength="2" placeholder="Your full name" />
+          </div>
+
+          <div class="row split">
+            <div>
+              <label for="date">Date</label>
+              <input id="date" name="date" type="date" required />
+            </div>
+            <div>
+              <label for="time">Time</label>
+              <input id="time" name="time" type="time" required />
+            </div>
+          </div>
+
+          <div class="row">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" placeholder="+91-..." />
+          </div>
+
+          <div class="row">
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes" rows="3" placeholder="Optional notes"></textarea>
+          </div>
+
+          <div class="actions">
+            <button type="submit" id="saveBtn">Save Booking</button>
+            <button type="button" id="clearBtn" class="muted">Clear All</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card list-card" aria-labelledby="list-heading">
+        <h2 id="list-heading">Bookings</h2>
+        <div id="emptyState" class="empty">No bookings yet — add one using the form.</div>
+        <ul id="bookingsList" class="bookings"></ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <small>Static demo • Data stored in your browser (localStorage)</small>
+    </footer>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
