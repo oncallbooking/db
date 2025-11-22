@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Technician Signup — FutriFix</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="centered-page">
+  <div class="card login-card">
+    <div class="logo">FF</div>
+    <h2>Technician Signup</h2>
+    <form id="techSignup" class="form">
+      <label>Full name
+        <input id="techName" required />
+      </label>
+      <label>Email
+        <input type="email" id="techEmail" required />
+      </label>
+      <label>Password
+        <input type="password" id="techPassword" minlength="6" required />
+      </label>
+      <label>Primary Skill
+        <input id="techSkill" required placeholder="e.g. AC Specialist" />
+      </label>
+      <button class="btn" type="submit">Create account</button>
+    </form>
+    <div class="muted small alt"><a href="/login-tech.html">Already have an account?</a></div>
+  </div>
+
+  <script>
+    document.getElementById('techSignup').addEventListener('submit', async function(e){
+      e.preventDefault();
+      const payload = {
+        role: "technician",
+        name: document.getElementById('techName').value.trim(),
+        email: document.getElementById('techEmail').value.trim(),
+        password: document.getElementById('techPassword').value,
+        skill: document.getElementById('techSkill').value.trim()
+      };
+      const res = await fetch('/signup', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+      const data = await res.json();
+      alert(data.message || 'Signup complete');
+      if(res.ok) window.location = '/login-tech.html';
+    });
+  </script>
+</body>
+</html>
