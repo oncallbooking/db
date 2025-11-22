@@ -1,39 +1,40 @@
-<!-- frontend/index.html
-  NOTE: This index references the uploaded dashboard file you provided.
-  Uploaded path: /mnt/data/index (1) copy.html
-  If you prefer to copy the uploaded file into this repo, replace the contents
-  of this file with the uploaded HTML contents.
--->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>FutriFix — Dashboard (redirect)</title>
+  <title>FutriFix — Home</title>
   <meta name="theme-color" content="#071026" />
-  <style>
-    /* simple loader */
-    body{margin:0;height:100vh;display:flex;align-items:center;justify-content:center;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:#07121a;color:#e6eef2}
-    a {color:#12c09b}
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div>
-    <p>Loading FutriFix dashboard…</p>
-    <p>If automatic redirect doesn't work, open the uploaded dashboard file directly:</p>
-    <p><a id="uploadedLink" href="#">Open uploaded dashboard</a></p>
+  <div class="container">
+    <div class="topbar">
+      <div class="top-inner">
+        <div class="brand">FutriFix</div>
+        <div class="navlinks">
+          <a href="/login-customer.html">Customer Login</a>
+          <a href="/login-tech.html">Technician Login</a>
+          <a href="/signup-customer.html">Sign up (Customer)</a>
+          <a href="/signup-tech.html">Sign up (Technician)</a>
+        </div>
+      </div>
+    </div>
+
+    <main style="padding:40px 0;">
+      <h1>FutriFix — Connect with certified technicians across India</h1>
+      <p class="muted">Fast bookings, local technicians, and easy bidding.</p>
+      <div style="margin-top:24px;">
+        <a class="btn" href="/signup-customer.html">Get started as Customer</a>
+        <a class="btn" href="/signup-tech.html" style="background:#0b6f56;margin-left:10px">Become a Technician</a>
+      </div>
+    </main>
+
+    <footer class="footer">
+      FutriFix demo — local development version.
+    </footer>
   </div>
 
-  <script>
-    // Developer note: the uploaded file path is:
-    const uploadedPath = "/mnt/data/index (1) copy.html";
-    // The deployment pipeline/tooling will transform that into a reachable URL.
-    // For local development without transformation, copy the uploaded HTML file
-    // into this folder as frontend/dashboard.html or frontend/index.html.
-    const link = document.getElementById('uploadedLink');
-    link.setAttribute('href', uploadedPath);
-    // try to redirect (if the environment supports it)
-    window.location.href = uploadedPath;
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
