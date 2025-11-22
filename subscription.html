@@ -1,0 +1,106 @@
+<!-- subscription.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Subscriptions — FutriFix</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container top-inner">
+      <div class="brand">FutriFix</div>
+      <nav class="navlinks">
+        <a href="index.html">Home</a>
+        <a href="subscription.html">Subscriptions</a>
+        <a href="login-customer.html">Customer Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container subs">
+    <h1>Customer Subscription Plans</h1>
+    <p class="muted lead">Get priority access to verified technicians with exclusive benefits.</p>
+
+    <div class="plans">
+      <article class="plan card">
+        <h3>Basic</h3>
+        <div class="price">Free</div>
+        <ul>
+          <li>Standard technician response time</li>
+          <li>Platform service fee applied</li>
+          <li>Basic support</li>
+          <li>Access to all technicians</li>
+        </ul>
+        <button class="btn disabled" data-plan="basic">Current Plan</button>
+      </article>
+
+      <article class="plan card featured">
+        <div class="tag">Most Popular</div>
+        <h3>Plus</h3>
+        <div class="price">₹149 /mo</div>
+        <ul>
+          <li>Priority technicians</li>
+          <li>Zero platform fee on 2 jobs</li>
+          <li>2 express jobs/month</li>
+          <li>5% discount on parts</li>
+        </ul>
+        <button class="btn subscribe" data-plan="plus">Subscribe Now</button>
+      </article>
+
+      <article class="plan card">
+        <h3>Elite</h3>
+        <div class="price">₹299 /mo</div>
+        <ul>
+          <li>Unlimited priority technicians</li>
+          <li>No platform fee</li>
+          <li>24/7 emergency support</li>
+          <li>Free monthly technician visit</li>
+        </ul>
+        <button class="btn subscribe" data-plan="elite">Subscribe Now</button>
+      </article>
+    </div>
+
+    <div id="subResult" class="note muted"></div>
+  </main>
+
+  <footer class="container footer">
+    <div>© FutriFix Demo — subscriptions</div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // simple subscription handler to augment script.js behavior
+    document.querySelectorAll('.subscribe').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var plan = btn.getAttribute('data-plan');
+        // Require customer login
+        var role = localStorage.getItem('futrifix_role');
+        if(role !== 'customer'){
+          if(!confirm('You must be logged in as a customer to subscribe. Go to Customer Login?')) return;
+          window.location = 'login-customer.html';
+          return;
+        }
+        if(confirm('Subscribe to ' + plan.toUpperCase() + ' for demo?')){
+          document.getElementById('subResult').textContent = 'Subscribed to ' + plan.toUpperCase() + ' — Thank you (demo).';
+          btn.textContent = 'Subscribed';
+          btn.classList.add('disabled');
+          btn.disabled = true;
+          // persist selected plan in localStorage
+          localStorage.setItem('futrifix_plan', plan);
+        }
+      });
+    });
+
+    // show current plan if set
+    (function(){
+      var p = localStorage.getItem('futrifix_plan');
+      if(p){
+        var display = document.getElementById('subResult');
+        display.textContent = 'Current plan: ' + p.toUpperCase();
+      }
+    })();
+  </script>
+</body>
+</html>
