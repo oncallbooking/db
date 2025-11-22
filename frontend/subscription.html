@@ -1,62 +1,28 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Subscriptions — FutriFix</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <title>Subscription — FutriFix</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="container top-inner">
-      <div class="brand">FutriFix</div>
-      <nav class="navlinks"><a href="/">Home</a></nav>
-    </div>
-  </header>
-
-  <main class="container subs">
-    <h1>Customer Subscription Plans</h1>
-    <p class="muted lead">Get priority access to verified technicians with exclusive benefits.</p>
-
-    <div class="plans">
-      <div class="plan card">
-        <h3>Basic</h3>
-        <div class="price">Free</div>
-        <ul>
-          <li>Standard technician response time</li>
-        </ul>
-        <button class="btn disabled">Current Plan</button>
+  <div class="container">
+    <h2>Subscription</h2>
+    <div class="card" style="max-width:480px;">
+      <p class="muted">Choose a plan</p>
+      <div class="form-row">
+        <select id="planSelect" class="input">
+          <option value="free">Free</option>
+          <option value="pro">Pro</option>
+          <option value="biz">Business</option>
+        </select>
       </div>
-
-      <div class="plan card featured">
-        <div class="tag">Most Popular</div>
-        <h3>Plus</h3>
-        <div class="price">₹149 /mo</div>
-        <ul><li>Priority technicians</li></ul>
-        <button class="btn" onclick="subscribe('plus')">Subscribe Now</button>
-      </div>
-
-      <div class="plan card">
-        <h3>Elite</h3>
-        <div class="price">₹299 /mo</div>
-        <ul><li>Unlimited priority technicians</li></ul>
-        <button class="btn" onclick="subscribe('elite')">Subscribe Now</button>
+      <div style="margin-top:12px;">
+        <button class="btn" onclick="(function(){ const u=JSON.parse(localStorage.getItem('futrifix_user')||'null'); if(!u){ alert('Login first'); return;} futrifix.subscribe(u.email, document.getElementById('planSelect').value); })()">Update Plan</button>
       </div>
     </div>
-
-    <div id="subResult" class="note muted"></div>
-  </main>
-
-  <script>
-    async function subscribe(plan){
-      const user = JSON.parse(localStorage.getItem('futrifix_user') || 'null');
-      if(!user || user.role !== 'customer'){ if(confirm('You must be logged in as customer. Login now?')) window.location = '/login-customer.html'; return; }
-      const res = await fetch('/subscribe', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email: user.email, plan }) });
-      const data = await res.json();
-      if(!res.ok){ alert(data.message || 'Subscribe failed'); return; }
-      document.getElementById('subResult').textContent = 'Subscribed: ' + plan;
-      alert('Subscription active (demo)');
-    }
-  </script>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
