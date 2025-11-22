@@ -1,0 +1,39 @@
+<!-- frontend/index.html
+  NOTE: This index references the uploaded dashboard file you provided.
+  Uploaded path: /mnt/data/index (1) copy.html
+  If you prefer to copy the uploaded file into this repo, replace the contents
+  of this file with the uploaded HTML contents.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FutriFix — Dashboard (redirect)</title>
+  <meta name="theme-color" content="#071026" />
+  <style>
+    /* simple loader */
+    body{margin:0;height:100vh;display:flex;align-items:center;justify-content:center;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:#07121a;color:#e6eef2}
+    a {color:#12c09b}
+  </style>
+</head>
+<body>
+  <div>
+    <p>Loading FutriFix dashboard…</p>
+    <p>If automatic redirect doesn't work, open the uploaded dashboard file directly:</p>
+    <p><a id="uploadedLink" href="#">Open uploaded dashboard</a></p>
+  </div>
+
+  <script>
+    // Developer note: the uploaded file path is:
+    const uploadedPath = "/mnt/data/index (1) copy.html";
+    // The deployment pipeline/tooling will transform that into a reachable URL.
+    // For local development without transformation, copy the uploaded HTML file
+    // into this folder as frontend/dashboard.html or frontend/index.html.
+    const link = document.getElementById('uploadedLink');
+    link.setAttribute('href', uploadedPath);
+    // try to redirect (if the environment supports it)
+    window.location.href = uploadedPath;
+  </script>
+</body>
+</html>
