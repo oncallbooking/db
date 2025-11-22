@@ -1,0 +1,44 @@
+<!-- login-tech.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Technician Login — FutriFix</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="centered-page">
+  <div class="card login-card">
+    <div class="logo">FF</div>
+    <h2>Technician Login</h2>
+    <form id="techLogin" class="form">
+      <label>Email
+        <input type="email" id="techEmail" placeholder="tech@example.com" required />
+      </label>
+      <label>Password
+        <input type="password" id="techPassword" required minlength="6" />
+      </label>
+
+      <div class="radio-row">
+        <label><input type="radio" name="role" checked disabled/> Technician</label>
+      </div>
+
+      <button class="btn" type="submit">Login</button>
+      <div class="muted small alt">Back to <a href="index.html">Home</a> · <a href="login-customer.html">Customer Login</a></div>
+    </form>
+  </div>
+
+  <script>
+    // Technician login (demo)
+    document.getElementById('techLogin').addEventListener('submit', function(e){
+      e.preventDefault();
+      const email = document.getElementById('techEmail').value.trim();
+      if(!email){ alert('Provide an email'); return; }
+      localStorage.setItem('futrifix_role','technician');
+      localStorage.setItem('futrifix_user', email);
+      alert('Logged in as technician: ' + email + ' (demo)');
+      window.location = 'index.html';
+    });
+  </script>
+</body>
+</html>
